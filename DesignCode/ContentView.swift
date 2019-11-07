@@ -52,11 +52,11 @@ struct ContentView: View {
             .scaleEffect(0.95)
             .rotationEffect(Angle(degrees: show ? 5 : 0))
             .animation(.spring())
-            .tapAction {
-               self.show.toggle()
+            .onTapGesture {
+                self.show.toggle()
             }
-            .gesture(
-               DragGesture()
+             .onTapGesture {
+                DragGesture()
                   .onChanged { value in
                      self.viewState = value.translation
                      self.show = true
@@ -65,7 +65,21 @@ struct ContentView: View {
                      self.viewState = CGSize.zero
                      self.show = false
                   }
-            )
+        }
+//            .tapAction {
+//               self.show.toggle()
+//            }
+//            .gesture(
+//               DragGesture()
+//                  .onChanged { value in
+//                     self.viewState = value.translation
+//                     self.show = true
+//                  }
+//                  .onEnded { _ in
+//                     self.viewState = CGSize.zero
+//                     self.show = false
+//                  }
+//            )
       }
    }
 }

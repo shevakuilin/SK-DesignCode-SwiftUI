@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-let statusBarHeight = UIApplication.shared.statusBarFrame.height
+let statusBarHeight: CGFloat = 20//UIApplication.shared.statusBarFrame.height
 let screen = UIScreen.main.bounds
 
 struct Home: View {
@@ -29,15 +29,18 @@ struct Home: View {
             .shadow(radius: 20)
             .animation(.spring())
             .offset(y: showProfile ? statusBarHeight + 40 : UIScreen.main.bounds.height)
-
-         MenuButton(show: $show)
-            .offset(x: -40, y: showProfile ? statusBarHeight : 80)
-            .animation(.spring())
-
-         MenuRight(show: $showProfile)
-            .offset(x: -16, y: showProfile ? statusBarHeight : 88)
-
-         MenuView(show: $show)
+        VStack(alignment: .leading) {
+            HStack(alignment: .top, spacing: UIScreen.main.bounds.size.width - 200) {
+                MenuButton(show: $show)
+                    .offset(x: -45, y: showProfile ? statusBarHeight : 80)
+                    .animation(.spring())
+                MenuRight(show: $showProfile)
+                    .offset(x: 0, y: showProfile ? statusBarHeight : 88)
+                
+            }
+            
+            MenuView(show: $show)
+        }
       }
       .background(Color("background"))
       .edgesIgnoringSafeArea(.all)
@@ -119,7 +122,7 @@ struct MenuView: View {
          .rotation3DEffect(Angle(degrees: show ? 0 : 60), axis: (x: 0, y: 10.0, z: 0))
          .animation(.default)
          .offset(x: show ? 0 : -UIScreen.main.bounds.width)
-         .tapAction {
+         .onTapGesture {
             self.show.toggle()
          }
          Spacer()
@@ -174,7 +177,7 @@ struct MenuRight: View {
 
    var body: some View {
       return ZStack(alignment: .topTrailing) {
-         HStack {
+        HStack(alignment: .top, spacing: 8) {
             Button(action: { self.show.toggle() }) {
                CircleButton(icon: "person.crop.circle")
             }
